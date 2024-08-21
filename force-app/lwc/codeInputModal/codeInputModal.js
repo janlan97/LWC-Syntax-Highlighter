@@ -9,7 +9,7 @@ export default class CodeInputModal extends LightningModal {
     @api label;
 
     async handleCopy() {
-        if(navigator.clipboard){
+        if (navigator.clipboard) {
             navigator.clipboard.writeText(this.code)
             .then(res => {
                 const evt = new ShowToastEvent({
@@ -19,7 +19,7 @@ export default class CodeInputModal extends LightningModal {
                   });
                   this.dispatchEvent(evt);
             })
-            .catch(error => {
+            .catch (error => {
                 const evt = new ShowToastEvent({
                     title: 'Error',
                     message: 'Problem with copying occured. ' + error,
