@@ -1,0 +1,11 @@
+<template>
+  <div
+      class="slds-form-element slds-hint-parent test-id__output-root slds-form-element_edit slds-form-element_readonly slds-form-element_stacked">
+      <span class="slds-form-element__label">{label}</span>
+      <div class="slds-form-element__control">
+        <div class="slds-form-element__static" onclick={openModal}>
+          <c-syntax-highlighter language={language} code={code}></c-syntax-highlighter>
+        </div>
+      </div>
+    </div>
+</template>

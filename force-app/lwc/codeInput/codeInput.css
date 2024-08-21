@@ -1,0 +1,6 @@
+.slds-form-element {
+    border-style: none;
+    min-height: -webkit-fill-available; 
+    max-width: -webkit-fill-available;
+    min-width: -webkit-fill-available;
+}
