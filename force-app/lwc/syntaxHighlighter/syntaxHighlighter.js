@@ -7,39 +7,67 @@ import beautifyHTML from '@salesforce/resourceUrl/beautifyHTML';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 
 export default class SyntaxHighlighter extends LightningElement {
-    @api language = 'javascript';
-    @api code = '';
+    @api language = 'json';
+    _code = '';
+    _librariesLoaded = false;
+
+    @api
+    set code(value) {
+        this._code = value;
+        if (this._librariesLoaded) {
+            this.highlightCode();
+        } else {
+            this.setPlainText();
+        }
+    }
+
+    get code() {
+        return this._code;
+    }
 
     async renderedCallback() {
-        Promise.all([
-            loadScript(this, prismJS),
-            loadStyle(this, prismCSS),
-            loadScript(this, beautifyJS),
-            loadScript(this, beautifyCSS),
-            loadScript(this, beautifyHTML),
-        ])
-        .then(() => {
+        if (!this._librariesLoaded) {
+            Promise.all([
+                loadScript(this, prismJS),
+                loadStyle(this, prismCSS),
+                loadScript(this, beautifyJS),
+                loadScript(this, beautifyCSS),
+                loadScript(this, beautifyHTML),
+            ])
+            .then(() => {
+                this._librariesLoaded = true;
+                this.highlightCode();
+            })
+            .catch(error => {
+                console.error('Error loading Prism.js or beautifiers', error);
+                this.setPlainText();
+            });
+        } else {
             this.highlightCode();
-        })
-        .catch(error => {
-            console.error('Error loading Prism.js', error);
-        });
+        }
     }
 
     async highlightCode() {
         const codeElement = this.template.querySelector('code');
         if (codeElement) {
             let isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/i);
-            if (isHTML(this.code) && window.html_beautify) {
-                codeElement.textContent = window.html_beautify(this.code);
+            if (isHTML(this._code) && window.html_beautify) {
+                codeElement.textContent = window.html_beautify(this._code);
             } else if (window.js_beautify) {
-                codeElement.textContent =  window.js_beautify(this.code);
+                codeElement.textContent = window.js_beautify(this._code);
             } else {
-                codeElement.textContent = this.code;
+                codeElement.textContent = this._code;
             }
             if (window.Prism) {
-                window.Prism.highlightElement(codeElement);
+                await window.Prism.highlightElement(codeElement);
             }
+        }
+    }
+
+    setPlainText() {
+        const codeElement = this.template.querySelector('code');
+        if (codeElement) {
+            codeElement.textContent = this._code;
         }
     }
 
