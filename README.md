@@ -61,4 +61,15 @@ To use the `SyntaxHighlighter` component, simply include it in your Lightning We
 
 ![image](https://github.com/user-attachments/assets/3ca931ea-3ccf-4b95-a452-89a22875821c)
 
+Parent component must handle `codeinputchanged` event to propagate changes to sobject record
+example:
+```
+    handleCodeInputChange(e) {
+        const result = e.detail.result;
+        const value = result.value;
+        const field = result.fieldName;
+        // propagate value to record...
+    }
+```
+
 Enjoy!
