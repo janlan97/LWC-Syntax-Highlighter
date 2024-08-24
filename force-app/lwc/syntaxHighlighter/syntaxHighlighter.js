@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { publishLog } from 'c/lwcLogger';
 import prismJS from '@salesforce/resourceUrl/PrismJS';
 import prismCSS from '@salesforce/resourceUrl/PrismCSS';
 import beautifyJS from '@salesforce/resourceUrl/beautifyJS';
@@ -40,6 +41,13 @@ export default class SyntaxHighlighter extends LightningElement {
             })
             .catch(error => {
                 console.error('Error loading Prism.js or beautifiers', error);
+                publishLog(
+                    'Logger',
+                    'SyntaxHighlighter exception occurred',
+                    JSON.stringify(error),
+                    false,
+                    null
+                );
                 this.setPlainText();
             });
         } else {
