@@ -1,9 +1,17 @@
 <template>
     <lightning-modal-header label={label}></lightning-modal-header>
     <lightning-modal-body>
-        <c-syntax-highlighter language={language} code={code}></c-syntax-highlighter>
+        <lightning-textarea class="slds-border_bottom slds-var-p-bottom_medium" if:false={readOnly} value={code}
+            onchange={handleInputChange}></lightning-textarea>
+        <div class="slds-var-p-top_medium">
+            <span class="slds-form-element__label">format output: {language}</span>
+            <c-syntax-highlighter language={language} code={code}></c-syntax-highlighter>
+        </div>
     </lightning-modal-body>
     <lightning-modal-footer>
-        <lightning-button label="Copy" onclick={handleCopy}></lightning-button>
+        <lightning-button-group class="slds-align_absolute-center">
+            <lightning-button label="Copy" onclick={handleCopy}></lightning-button>
+            <lightning-button if:false={readOnly} label="Save" onclick={handleSave}></lightning-button>
+        </lightning-button-group>
     </lightning-modal-footer>
 </template>

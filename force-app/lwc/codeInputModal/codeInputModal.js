@@ -7,9 +7,12 @@ export default class CodeInputModal extends LightningModal {
     @api language = 'javascript';
     @api code = '';
     @api label;
+    @api readOnly = false;
+    @api fieldName;
+    _inputValue = this.code;
 
     async handleCopy() {
-        if (navigator.clipboard) {
+        if(navigator.clipboard){
             navigator.clipboard.writeText(this.code)
             .then(res => {
                 const evt = new ShowToastEvent({
@@ -19,7 +22,7 @@ export default class CodeInputModal extends LightningModal {
                   });
                   this.dispatchEvent(evt);
             })
-            .catch (error => {
+            .catch(error => {
                 const evt = new ShowToastEvent({
                     title: 'Error',
                     message: 'Problem with copying occured. ' + error,
@@ -30,6 +33,15 @@ export default class CodeInputModal extends LightningModal {
         } else {
             document.execCommand('copy');
         }
+     }
+
+     handleInputChange(e) {
+        this.code = e.target.value;
+        this._inputValue = e.target.value;
+     }
+
+     handleSave(e) {
+        this.close({ fieldName: this.fieldName, value: this._inputValue ?? '' });
      }
 
 }
