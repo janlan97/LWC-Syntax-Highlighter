@@ -27,8 +27,9 @@ The SyntaxHighlighter component is designed to transform plain code or JSON text
 - **Multi-Language Support**: Easily highlight code in various languages like JavaScript, HTML, Apex, and more by simply setting the `language` attribute.
 - **Prism.js Integration**: Utilizes Prism.js for robust and customizable syntax highlighting.
 - **js-beautify Integration**: Automatically formats your code according to the specified language, making it more readable and maintainable. You can include your own formatting options.
-- **Dynamic Code Rendering**: The component dynamically renders the highlighted code based on the `code` attribute passed to it.
-- **Modal Included**: Supports modals for code editing and copying, making it versatile for both display and interaction. Just click on input!
+- **Dynamic Code Rendering**: The component dynamically renders the `code` with reflected syntax highlighting and formatting according to the language.
+- **Edit / Read**: Component can be used in either read or edit mode.
+- **Modal Included**: Supports modals for code editing and copying, making it versatile for both display and interaction.
 
 ## Components
 
@@ -44,11 +45,12 @@ To use the `SyntaxHighlighter` component, simply include it in your Lightning We
 
 **Base component usage:**
 ```html
-<c-syntax-highlighter language="javascript" code="const example = 'Hello World!';"></c-syntax-highlighter>
+<c-syntax-highlighter language="json" code="{"a":1,"b":2}"></c-syntax-highlighter>
 ```
-**Record Form Field Wrapper:**
+**Record Form Field Wrapper (Read Mode):**
 ```html
-<c-code-input language="json" code={field.value} label={field.label}></c-code-input>
+<c-code-input data-key={field.apiName} language="json" code={field.value} label={label} read-only={readOnly} field-name={field.apiName}
 ```
+![image](https://github.com/user-attachments/assets/c383a078-91b3-42b0-9a00-a908bf89cce9)
 
 Enjoy!
