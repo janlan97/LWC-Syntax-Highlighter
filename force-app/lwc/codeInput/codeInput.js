@@ -32,8 +32,11 @@ export default class CodeInput extends LightningElement {
             readOnly: this.readOnly,
             fieldName: this.fieldName
         }).then((result) => {
-            if (!this.readOnly && this._code !== result.value) {
-                this.dispatchEvent(new CustomEvent('codeinputchanged', { detail: { result } }));
+            if (result !== undefined) {
+                if (!this.readOnly && this._code !== result.value) {
+                    this.code = result.value;
+                    this.dispatchEvent(new CustomEvent('codeinputchanged', { detail: { result } }));
+                }
             }
         });
     }
