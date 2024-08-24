@@ -49,8 +49,16 @@ To use the `SyntaxHighlighter` component, simply include it in your Lightning We
 ```
 **Record Form Field Wrapper (Read Mode):**
 ```html
-<c-code-input data-key={field.apiName} language="json" code={field.value} label={label} read-only={readOnly} field-name={field.apiName}
+<c-code-input data-key={field.apiName} language="json" code={field.value} label={label} read-only={readOnly} field-name={field.apiName}>
 ```
 ![image](https://github.com/user-attachments/assets/c383a078-91b3-42b0-9a00-a908bf89cce9)
+
+**Record Form Field Wrapper (Edit Mode):**
+```html
+<c-code-input data-key={field.apiName} language="json" code={field.value} label={field.label} read-only={readOnly} field-name={field.apiName} oncodeinputchanged={handleCodeInputChange}></c-code-input>
+```
+![image](https://github.com/user-attachments/assets/ecedfc93-2388-4b0e-9c68-f4e5f85ceabb)
+
+![image](https://github.com/user-attachments/assets/3ca931ea-3ccf-4b95-a452-89a22875821c)
 
 Enjoy!
