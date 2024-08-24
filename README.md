@@ -62,14 +62,63 @@ To use the `SyntaxHighlighter` component, simply include it in your Lightning We
 ![image](https://github.com/user-attachments/assets/3ca931ea-3ccf-4b95-a452-89a22875821c)
 
 Parent component must handle `codeinputchanged` event to propagate changes to sobject record
+
+
+# LWC Component Documentation
+
+## CodeInput
+Wrapper mimicing standard lighting form field
+
+### Properties
+
+| Property           | Type    | Default          | Description                                                                                 |
+|--------------------|---------|------------------|---------------------------------------------------------------------------------------------|
+| `@api language`    | String  | `'javascript'`   | Code language for the input         |
+| `@api label`       | String  | Optional         | Label for input          |
+| `@api fieldName`   | String  | Optional         | Associates the code input with a specific field name. Useful for data objects or forms.     |
+| `@api readOnly`    | Boolean | `false`          | Flag for turn on / off read-only mode         |
+
+### Events
+## codeinputchanged
+Event generated after changing code in modal, it's dispatched to codeInput and then propagated higher in hierarchy
+| Parameter Name       | Type    | Description |
+|----------------------|---------|-------------|
+| fieldName            | String  | Field API name |
+| value                | String  | New value   |
+
 example:
+```html
+<c-code-input data-key={field.apiName} language="json" code={field.value} label={field.label} read-only={readOnly} field-name={field.apiName} oncodeinputchanged={handleCodeInputChange}></c-code-input>
 ```
+```javascript
     handleCodeInputChange(e) {
         const result = e.detail.result;
         const value = result.value;
         const field = result.fieldName;
-        // propagate value to record...
+        // propagate value to record in Salesforce...
     }
 ```
 
-Enjoy!
+## CodeInputModal
+Modal offering larger insight in code, allowing user to copy the code and providing a real-time editor (in edit mode).
+
+### Properties
+
+| Property           | Type    | Default          | Description                                                                                 |
+|--------------------|---------|------------------|---------------------------------------------------------------------------------------------|
+| `@api language`    | String  | `'javascript'`   | Specifies the programming language for the code input within the modal. Affects syntax highlighting. |
+| `@api code`        | String  | `''`             | Holds the initial code content displayed in the modal's input field.                        |
+| `@api label`       | String  | Optional         | Defines a custom label within the modal. Helps users understand the purpose of the input field. |
+| `@api readOnly`    | Boolean | `false`          | Sets the input field within the modal to read-only mode. Users can view but not edit the code. |
+| `@api fieldName`   | String  | Optional         | Associates the code input within the modal with a specific field name. Useful for editing data objects or forms. |
+
+## SyntaxHighlighter
+Code snippet container with applied syntax and formatting.
+
+### Properties
+
+| Property           | Type    | Default      | Description                                                                                  |
+|--------------------|---------|--------------|----------------------------------------------------------------------------------------------|
+| `@api language`    | String  | `'json'`     | Specifies the language for syntax highlighting. Determines syntax rules applied. |
+| `@api code`        | String  |              | The code content to be highlighted. Displays as plain text if necessary libraries aren't loaded. |
+
