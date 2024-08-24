@@ -4,3 +4,10 @@
     max-width: -webkit-fill-available;
     min-width: -webkit-fill-available;
 }
+
+.slds-form-element__control .edit-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
